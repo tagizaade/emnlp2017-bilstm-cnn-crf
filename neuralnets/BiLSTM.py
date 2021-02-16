@@ -40,7 +40,8 @@ class BiLSTM:
                          'charEmbeddings': None, 'charEmbeddingsSize': 30, 'charFilterSize': 30, 'charFilterLength': 3, 'charLSTMSize': 25, 'maxCharLength': 25,
                          'useTaskIdentifier': False, 'clipvalue': 0, 'clipnorm': 1,
                          'earlyStopping': 5, 'miniBatchSize': 32,
-                         'featureNames': ['tokens', 'casing'], 'addFeatureDimensions': 10}
+                         'featureNames': ['tokens', 'casing'], 'addFeatureDimensions': 10,
+                         'class_weight': None}
         if params != None:
             defaultParams.update(params)
         self.params = defaultParams
@@ -270,7 +271,7 @@ class BiLSTM:
             for modelName in self.modelNames:         
                 nnLabels = batch[modelName][0]
                 nnInput = batch[modelName][1:]
-                self.models[modelName].train_on_batch(nnInput, nnLabels)  
+                self.models[modelName].train_on_batch(nnInput, nnLabels, class_weight = self.params['class_weight'])  
                 
                                
             
