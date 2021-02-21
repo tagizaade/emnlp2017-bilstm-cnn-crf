@@ -248,7 +248,7 @@ class BiLSTM:
             
             
             model = Model(inputs=inputNodes, outputs=[output])
-            model.compile(loss=lossFct, optimizer=opt)
+            model.compile(loss=lossFct, optimizer=opt, loss_weights = self.params['class_weight'])
             
             model.summary(line_length=125)
             #logging.info(model.get_config())
@@ -271,7 +271,7 @@ class BiLSTM:
             for modelName in self.modelNames:         
                 nnLabels = batch[modelName][0]
                 nnInput = batch[modelName][1:]
-                self.models[modelName].train_on_batch(nnInput, nnLabels, class_weight = self.params['class_weight'])  
+                self.models[modelName].train_on_batch(nnInput, nnLabels)  
                 
                                
             
