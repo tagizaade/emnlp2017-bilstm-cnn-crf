@@ -41,7 +41,8 @@ class BiLSTM:
                          'useTaskIdentifier': False, 'clipvalue': 0, 'clipnorm': 1,
                          'earlyStopping': 5, 'miniBatchSize': 32,
                          'featureNames': ['tokens', 'casing'], 'addFeatureDimensions': 10,
-                         'class_weight': None}
+                         'class_weight': None,
+                         'loss_weights': None}
         if params != None:
             defaultParams.update(params)
         self.params = defaultParams
@@ -248,7 +249,7 @@ class BiLSTM:
             
             
             model = Model(inputs=inputNodes, outputs=[output])
-            model.compile(loss=lossFct, optimizer=opt, loss_weights = self.params['class_weight'])
+            model.compile(loss=lossFct, optimizer=opt, loss_weights = self.params['loss_weights'])
             
             model.summary(line_length=125)
             #logging.info(model.get_config())
